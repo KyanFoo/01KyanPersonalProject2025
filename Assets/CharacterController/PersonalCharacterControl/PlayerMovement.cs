@@ -1,28 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace KyanPersonalProject2025.Prototype
+namespace KyanPersonalProject2025.PersonalCharacterController
 {
-    public class CameraController3 : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour
     {
         [Header("References")]
-        public Transform playerMesh;        // Child object with mesh visuals
-        public Transform virtualCamera;     // Camera (Cinemachine or normal)
         public Rigidbody rb;
-
-        [Header("Camera Settings")]
-        public float sensX = 200f;
-        public float sensY = 200f;
+        public FirstPlayerCam firstPlayerCam;
 
         [Header("Spawn Settings")]
         public Vector3 spawnPosition = Vector3.zero; // Custom spawn position
         public float spawnHeightOffset = 1.5f;       // Lift player slightly above ground
         public bool freezeMovementOnSpawn = true;    // Prevent control until grounded
-
-        private float xRotation = 0f;
-        private float yRotation = 0f;
         public bool canMove = false;
 
         [Header("Keybinds")]
@@ -48,17 +39,6 @@ namespace KyanPersonalProject2025.Prototype
             {
                 return; // Wait until spawn animation or ground contact
             }
-
-            // --- CAMERA ROTATION ---
-            float mouseX = Input.GetAxis("Mouse X") * sensX * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * sensY * Time.deltaTime;
-
-            yRotation += mouseX;
-            xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-            virtualCamera.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
-            playerMesh.localRotation = Quaternion.Euler(0f, yRotation, 0f);
 
             // Debug hotkey to reset player
             if (Input.GetKey(spawnKey))
