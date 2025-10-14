@@ -23,12 +23,19 @@ namespace KyanPersonalProject2025.Prototype
 
         private float xRotation = 0f;
         private float yRotation = 0f;
-        private bool canMove = false;
+        public bool canMove = false;
+
+        [Header("Keybinds")]
+        public KeyCode spawnKey = KeyCode.Space;
+        public KeyCode resetKey = KeyCode.R;
 
         void Start()
         {
             // Initialize Rigidbody if not assigned
-            if (!rb) rb = GetComponent<Rigidbody>();
+            if (!rb)
+            {
+                rb = GetComponent<Rigidbody>();
+            }
 
             // Set initial position at spawn + height offset
             Vector3 startPos = spawnPosition + Vector3.up * spawnHeightOffset;
@@ -38,7 +45,9 @@ namespace KyanPersonalProject2025.Prototype
         void Update()
         {
             if (!canMove)
+            {
                 return; // Wait until spawn animation or ground contact
+            }
 
             // --- CAMERA ROTATION ---
             float mouseX = Input.GetAxis("Mouse X") * sensX * Time.deltaTime;
@@ -52,12 +61,13 @@ namespace KyanPersonalProject2025.Prototype
             playerMesh.localRotation = Quaternion.Euler(0f, yRotation, 0f);
 
             // Debug hotkey to reset player
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetKey(spawnKey))
             {
                 ResetPlayerState(spawnPosition + Vector3.up * spawnHeightOffset, false);
             }
 
-            if (Input.GetKeyDown(KeyCode.R))
+            // Reset Player's Transform.Position (0, 0, 0)
+            if (Input.GetKey(resetKey))
             {
                 ResetPlayerState(Vector3.zero, false);
             }
@@ -81,7 +91,7 @@ namespace KyanPersonalProject2025.Prototype
             }
         }
 
-        private System.Collections.IEnumerator EnableMovementAfterDelay(float delay)
+        IEnumerator EnableMovementAfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
             rb.isKinematic = false;
