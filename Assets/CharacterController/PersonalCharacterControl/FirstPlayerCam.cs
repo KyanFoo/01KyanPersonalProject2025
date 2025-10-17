@@ -10,6 +10,7 @@ namespace KyanPersonalProject2025.PersonalCharacterController
         [Header("References")]
         public Transform playerMesh;                    // Child object with mesh visuals
         public CinemachineVirtualCamera virtualCamera;  // Camera (Cinemachine or normal)
+        public PlayerInputHandler playerInputHandler;
         public PlayerMovement playerMovement;
 
         [Header("Camera Settings")]
@@ -27,8 +28,8 @@ namespace KyanPersonalProject2025.PersonalCharacterController
             }
 
             // --- CAMERA ROTATION ---
-            float mouseX = Input.GetAxis("Mouse X") * sensX * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * sensY * Time.deltaTime;
+            float mouseX = playerInputHandler.mouseX * sensX * Time.deltaTime;
+            float mouseY = playerInputHandler.mouseY * sensX * Time.deltaTime;
 
             yRotation += mouseX;
             xRotation -= mouseY;
