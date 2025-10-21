@@ -9,7 +9,6 @@ namespace KyanPersonalProject2025.Prototype
         [Header("References")]
         public Transform playerMesh;       // Child object with mesh visuals
         public Transform virtualCamera;    // Camera (Cinemachine or normal)
-        public Rigidbody rb;
 
         [Header("Sensitivity")]
         public float sensX = 200f;
@@ -34,18 +33,6 @@ namespace KyanPersonalProject2025.Prototype
 
             // Rotate player mesh horizontally
             playerMesh.localRotation = Quaternion.Euler(0f, yRotation, 0f);
-
-            if (Input.GetButtonDown("Jump"))
-            {
-                ResetPlayerState();
-            }
-        }
-
-        public void ResetPlayerState()
-        {
-            transform.position = Vector3.zero; // Or rb.position = Vector3.zero;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
         }
     }
 }
