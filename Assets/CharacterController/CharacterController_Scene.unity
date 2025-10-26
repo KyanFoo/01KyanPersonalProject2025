@@ -5036,7 +5036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d8c3eadf964d1a4ebc9229fa5798a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRigidbody: {fileID: 0}
+  playerRigidbody: {fileID: 1561105756}
   playerCollider: {fileID: 1561105755}
   firstPlayerCam: {fileID: 1561105758}
   spawnPosition: {x: 0, y: 0, z: 0}
@@ -5050,6 +5050,9 @@ MonoBehaviour:
   isGrounded: 0
   spawnKey: 32
   resetKey: 114
+  debug: 1
+  debugTypes: 4
+  debugCastProgress: 0
 --- !u!114 &1561105758
 MonoBehaviour:
   m_ObjectHideFlags: 0
