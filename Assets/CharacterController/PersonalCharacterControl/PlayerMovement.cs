@@ -119,6 +119,8 @@ namespace KyanPersonalProject2025.PersonalCharacterController
         {
             isGrounded = CheckGrounded();
 
+            ExtraGravity();
+
             ControlDrag();
         }
 
