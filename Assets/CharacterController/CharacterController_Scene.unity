@@ -5036,12 +5036,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d8c3eadf964d1a4ebc9229fa5798a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1561105756}
+  playerRigidbody: {fileID: 0}
+  playerCollider: {fileID: 1561105755}
   firstPlayerCam: {fileID: 1561105758}
   spawnPosition: {x: 0, y: 0, z: 0}
   spawnHeightOffset: 1.5
   freezeMovementOnSpawn: 1
   canMove: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckDistance: 0.05
+  isGrounded: 0
   spawnKey: 32
   resetKey: 114
 --- !u!114 &1561105758

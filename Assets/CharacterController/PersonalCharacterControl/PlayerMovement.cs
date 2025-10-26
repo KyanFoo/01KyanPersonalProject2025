@@ -7,7 +7,8 @@ namespace KyanPersonalProject2025.PersonalCharacterController
     public class PlayerMovement : MonoBehaviour
     {
         [Header("References")]
-        public Rigidbody rb;
+        public Rigidbody playerRigidbody;
+        public CapsuleCollider playerCollider;
         public FirstPlayerCam firstPlayerCam;
 
         [Header("Spawn Settings")]
@@ -16,6 +17,12 @@ namespace KyanPersonalProject2025.PersonalCharacterController
         public bool freezeMovementOnSpawn = true;    // Prevent control until grounded
         public bool canMove = false;
 
+        [Header("GroundCheck Settings")]
+        [SerializeField] private LayerMask groundMask;
+        [SerializeField] private float groundCheckDistance = 0.05f;
+        private const float GROUND_CHECK_SPHERE_OFFSET = 0.05f;
+        public bool isGrounded;
+
         [Header("Keybinds")]
         public KeyCode spawnKey = KeyCode.Space;
         public KeyCode resetKey = KeyCode.R;
@@ -23,9 +30,9 @@ namespace KyanPersonalProject2025.PersonalCharacterController
         void Start()
         {
             // Initialize Rigidbody if not assigned
-            if (!rb)
+            if (!playerRigidbody)
             {
-                rb = GetComponent<Rigidbody>();
+                playerRigidbody = GetComponent<Rigidbody>();
             }
 
             // Set initial position at spawn + height offset
@@ -53,18 +60,23 @@ namespace KyanPersonalProject2025.PersonalCharacterController
             }
         }
 
+        private void FixedUpdate()
+        {
+            isGrounded = CheckGrounded();
+        }
+
         public void ResetPlayerState(Vector3 newPosition, bool freeze = false)
         {
             // --- RESET PHYSICS ---
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.position = newPosition;
+            playerRigidbody.velocity = Vector3.zero;
+            playerRigidbody.angularVelocity = Vector3.zero;
+            playerRigidbody.position = newPosition;
             transform.position = newPosition; // Keep Transform in sync
 
             // Optional freeze
             if (freeze)
             {
-                rb.isKinematic = true;
+                playerRigidbody.isKinematic = true;
                 canMove = false;
                 // Wait a short delay, then allow movement
                 StartCoroutine(EnableMovementAfterDelay(0.5f));
@@ -74,8 +86,22 @@ namespace KyanPersonalProject2025.PersonalCharacterController
         IEnumerator EnableMovementAfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
-            rb.isKinematic = false;
+            playerRigidbody.isKinematic = false;
             canMove = true;
+        }
+
+        private Vector3 FeetPosition()
+        {
+            Vector3 sphereOffset = (playerCollider.height * transform.localScale.y / 2 - playerCollider.radius * transform.localScale.x) * -1 * transform.up;
+            Vector3 feetPosition = playerRigidbody.position + sphereOffset;
+            return feetPosition;
+        }
+
+        private bool CheckGrounded()
+        {
+            Vector3 checkOrigin = FeetPosition() + transform.up * GROUND_CHECK_SPHERE_OFFSET;
+            float checkDistance = groundCheckDistance + GROUND_CHECK_SPHERE_OFFSET;
+            return Physics.SphereCast(checkOrigin, playerCollider.radius * transform.localScale.x, -transform.up, out RaycastHit _, checkDistance, groundMask);
         }
     }
 }
