@@ -295,17 +295,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2804413976790739181, guid: 8080e7ce55b6d4f4eb3855fc71d66842, type: 3}
+      propertyPath: dashSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2804413976790739181, guid: 8080e7ce55b6d4f4eb3855fc71d66842, type: 3}
+      propertyPath: targetGravity
+      value: -30
+      objectReference: {fileID: 0}
     - target: {fileID: 4874822498983468910, guid: 8080e7ce55b6d4f4eb3855fc71d66842, type: 3}
       propertyPath: m_Name
       value: CharacterControl#1
       objectReference: {fileID: 0}
     - target: {fileID: 4874822498983468910, guid: 8080e7ce55b6d4f4eb3855fc71d66842, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7455978342532151121, guid: 8080e7ce55b6d4f4eb3855fc71d66842, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.68
       objectReference: {fileID: 0}
     - target: {fileID: 7455978342532151121, guid: 8080e7ce55b6d4f4eb3855fc71d66842, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4949,6 +4957,7 @@ GameObject:
   - component: {fileID: 1561105759}
   - component: {fileID: 1561105758}
   - component: {fileID: 1561105757}
+  - component: {fileID: 1561105760}
   m_Layer: 0
   m_Name: PlayerRoot
   m_TagString: Untagged
@@ -5039,8 +5048,21 @@ MonoBehaviour:
   playerRigidbody: {fileID: 1561105756}
   playerCollider: {fileID: 1561105755}
   firstPlayerCam: {fileID: 1561105758}
+  walkSpeed: 7
+  sprintSpeed: 10
+  dashSpeed: 20
+  airControlMultiplier: 0.4
+  velocityMagnitude: 0
+  state: 0
+  isDashing: 0
+  dashSpeedChangeFactor: 0
+  maxYSpeed: 0
+  groundDrag: 5
+  airDrag: 2
+  targetGravity: -24
+  extraGravity: 2
   spawnPosition: {x: 0, y: 0, z: 0}
-  spawnHeightOffset: 1.5
+  spawnHeightOffset: 0
   freezeMovementOnSpawn: 1
   canMove: 0
   groundMask:
@@ -5048,8 +5070,10 @@ MonoBehaviour:
     m_Bits: 8
   groundCheckDistance: 0.05
   isGrounded: 0
-  spawnKey: 32
+  spawnKey: 102
   resetKey: 114
+  jumpKey: 32
+  sprintKey: 304
   debug: 1
   debugTypes: 4
   debugCastProgress: 0
@@ -5087,6 +5111,30 @@ MonoBehaviour:
   mouseY: 0
   verticalInput: 0
   horizontalInput: 0
+--- !u!114 &1561105760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561105753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde9f5cf868a0a9468a36a9bccd6f55b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 575994929}
+  playerCam: {fileID: 1655995055}
+  dashForce: 20
+  dashUpwardForce: 0
+  maxDashYSpeed: 15
+  dashDuration: 0.25
+  useCameraForward: 1
+  allowAllDirections: 1
+  disableGravity: 0
+  resetVel: 1
+  dashCd: 1.5
+  dashKey: 101
 --- !u!43 &1625707699
 Mesh:
   m_ObjectHideFlags: 0

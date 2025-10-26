@@ -58,7 +58,7 @@ namespace KyanPersonalProject2025.CharacterControl1
 
         Vector3 moveDirection;
 
-        float targetGravity = -30f;
+        public float targetGravity = -30f;
 
         public Rigidbody rb;
 
@@ -107,7 +107,7 @@ namespace KyanPersonalProject2025.CharacterControl1
                 rb.drag = 0f;
             }
 
-            TextStuff();
+            //TextStuff();
         }
 
         private void FixedUpdate()
